@@ -1,0 +1,890 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>HTML5 Video - Kicking plugins to the curb</title>
+
+    <meta name="description" content="Help people integrate with your API for the long haul">
+    <meta name="author" content="Matthew McClure">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/beige.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- <link rel="stylesheet" href="css/print/pdf.css" type="text/css" media="print"> -->
+    <style type="text/css">
+      video::cue(c.blue-text) { color: #b6dae6 }
+      video::cue(v[voice="John"]) { color: yellow }
+      video::cue(v[voice="Jane"]) { color: orange }
+    </style>
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+          <h1>HTML5 <span class="text pink">&lt;video&gt;</span></h1>
+          <h3>kicking plugins to the curb</h3>
+          <p><a href="http://twitter.com/matt_mcclure" parent="_blank">@matt_mcclure</a></p>
+          <p><small>Developer Week 2014</small></p>
+        </section>
+
+        <section>
+          <img src="images/brightcove.png" alt="Zencoder"/>
+          <img src="images/zencoder.png" alt="Zencoder"/>
+          <img src="images/videojs.png" alt="Zencoder"/>
+        </section>
+
+        <section>
+          <h2>Still a little <span class="text green">awkward</span></h2>
+          <p class="fragment">...but getting <em>waaaay</em> better</p>
+        </section>
+
+        <section>
+          <section>
+            <h2>A brief <span class="text blue">history</span> lesson</h2>
+            <p>With examples from eBaum's World</p>
+          </section>
+          <section>
+            <h2>The Dark Ages</h2>
+            <p>Right-click, download as.</p>
+          </section>
+          <section>
+            <img src="images/ebaum-download.jpg"/>
+          </section>
+
+          <section>
+            <h2>Circa 2000: Plugin-mania</h2>
+            <p>
+              <img src="images/quicktime.png"/>
+              <img src="images/real.png"/>
+              <img src="images/windows-media.png"/>
+            </p>
+            <aside class="notes">
+              During this time, there was absolutely no standardization and there were a ton of different plugins being used everywhere.
+            </aside>
+          </section>
+          <section>
+            <img src="images/ebaum-plugin.jpg"/>
+          </section>
+
+          <section>
+            <h2>Circa 2008: Flash</h2>
+            <p>
+              <img width="125" height="auto" src="images/quicktime.png"/>
+              <img src="images/flash.png"/>
+              <img width="125" height="auto" src="images/silverlight.png"/>
+            </p>
+          </section>
+          <section>
+            <img src="images/ebaum-flash.jpg"/>
+          </section>
+
+          <section>
+            <h2>Circa 2015: HTML5</h2>
+            <p>
+              <img width="200" height="auto" src="images/html5.png"/>
+              <img width="125" height="auto" src="images/flash.png"/>
+            </p>
+          </section>
+          <section>
+            <img src="images/videojs-player.png"/>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Up and to the right</h2>
+            <img class="bordered" src="images/chart-percent-html5-user.png"/>
+          </section>
+          <section>
+            <h2>What about the last 15%?!</h2>
+            <img class="fragment" src="images/browser-ie.png" />
+          </section>
+          <section>
+            <img class="bordered" src="images/ie8usage.png"/>
+            <p><small><a href="http://theie8countdown.com/">theIE8countdown.com</a></small></p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Why use HTML5 <span class="text pink">now</span>?</h2>
+            <ul>
+              <li class="fragment">It's the future!</li>
+              <li class="fragment">Runs natively in the browser</li>
+              <li class="fragment">Cleaner code</li>
+            </ul>
+          </section>
+          <section>
+            <h2>The <span class="text green">dream</span></h2>
+            <pre><code data-trim contenteditable>
+              <video src="video.mp4" controls></video>
+            </code></pre>
+            <aside class="notes">
+              Make sure to point out that the controls shouldn't have the =""
+            </aside>
+          </section>
+          <section>
+            <h2>The <span class="text blue">reality</span></h2>
+            <pre><code data-trim contenteditable><video controls>
+  <source src="video.mp4" type="video/mp4">
+  <source src="video.webm" type="video/webm">
+  <source src="video.ogv" type="video/ogg">
+  <object type="application/x-shockwave-flash" data="flash.swf">
+    <param name="movie" value="flash.swf" />
+    <param name="flashvars" value="file=video.mp4" />
+  </object>
+</video>
+            </code></pre>
+            <aside class="notes">
+              Make note of fallback being handled by a lot of players and delete the code
+            </aside>
+          </section>
+          <section>
+            <h2>Already well supported</h2>
+            <div class="box half">
+              <h3>No (17%)</h3>
+              <img width="100" height="auto" src="images/browser-ie.png"/>
+              <img width="100" height="auto" src="images/browser-feature-phone.png"/>
+            </div>
+            <div class="box half">
+              <h3>Yes (83%)</h3>
+              <img width="100" height="auto" src="images/browser-safari.png"/>
+              <img width="100" height="auto" src="images/browser-ie.png"/>
+              <img width="100" height="auto" src="images/browser-chrome.png"/><br/>
+              <img width="100" height="auto" src="images/browser-firefox.png"/>
+              <img width="100" height="auto" src="images/browser-opera.png"/>
+            </div>
+            <aside class="notes">
+              No support
+              <ul>
+                <li>IE 6/7/8</li>
+                <li>Feature Phones</li>
+              </ul>
+              Yes Support
+              <ul>
+                <li>Safari 3+</li>
+                <li>IE 9+</li>
+                <li>Chrome 3+</li>
+                <li>Firefox 21+</li>
+                <li>Opera 10.5+</li>
+              </ul>
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Flash <del class="dim">is</del> was ubiquitous</h2>
+            <p>So what brought about the shift to HTML5 video at all?</p>
+            <aside class="notes">
+              The is / was thing is kinda wishful thinking
+            </aside>
+          </section>
+          <section>
+            <img src="images/ios.png"/>
+          </section>
+          <section>
+            <img class="bordered" src="images/percentage-html5-available.png"/>
+            <aside class="notes">
+              Make sure to note that the 3Gs was released in June 2009.
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>The Format Wars</h2>
+            <img src="images/h264-logo.png" style="vertical-align:middle;"/>
+            <img src="images/webm-logo.png" style="vertical-align:middle;margin:0 20px;"/>
+            <img src="images/ogg-logo.png" style="vertical-align:middle;"/>
+          </section>
+          <section>
+            <div class="box half">
+              <h2>Open</h2>
+              <img width="100" height="auto" src="images/browser-chrome.png"/>
+              <img width="100" height="auto" src="images/browser-firefox.png"/>
+              <img width="100" height="auto" src="images/browser-opera.png"/>
+            </div>
+            <div class="box half">
+              <h2>Closed</h2>
+              <img width="100" height="auto" src="images/browser-safari.png"/>
+              <img width="100" height="auto" src="images/browser-ie.png"/>
+              <img width="100" height="auto" src="images/browser-chrome.png"/>
+              <img width="100" height="auto" src="images/browser-firefox.png"/>
+            </div>
+            <aside class="notes">
+              Make note of Firefox only kind of supporting H.264
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <h2>Easy to use <span class="text pink">API</span></h2>
+          <video class="stretch" id="video-1" src="http://vjs.zencdn.net/v/oceans.mp4" controls></video>
+          <aside class="notes">
+            <ul>
+              <li>var video = document.getElementById('video-1')</li>
+              <li>video.play()</li>
+              <li>video.pause()</li>
+              <li>video.duration</li>
+              <li>video.currentTime</li>
+              <li>video.currentTime = 20</li>
+              <li>video.play()</li>
+              <li>video.pause()</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <section>
+            <h2>The <span class="text blue">Future</span></h2>
+            <img class="bordered" src="images/future.png"/>
+          </section>
+          <section>
+            <h2>Batteries <span class="text green">included</span>, no plugins necessary*</h2>
+            <img src="images/no-plugin.png" />
+            <p><small>* <del>most</del> some of the time</small></p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>WebVTT</h2>
+            <ul>
+              <li class="fragment"><strong>Web</strong> <strong>V</strong>ideo <strong>T</strong>ext <strong>T</strong>racks</li>
+              <li class="fragment">Main use is captioning</li>
+              <li class="fragment">Plain text</li>
+              <li class="fragment">Specified in the <span class="text green"><code>&lt;track&gt;</code></span> element</li>
+            </ul>
+          </section>
+
+          <section>
+            <pre><code data-trim contenteditable><video controls>
+  <source src="video.mp4" type="video/mp4">
+  <source src="video.webm" type="video/webm">
+  <source src="video.ogv" type="video/ogg">
+  <track label="English" kind="subtitles" srclang="en" src="captions.vtt" default>
+</video>
+            </code></pre>
+          </section>
+
+          <section>
+            <pre><code class="no-highlight" data-trim contenteditable>
+WEBVTT
+
+00:00.001 --> 00:04.000
+Awwwww yeah.
+
+00:04.001 --> 00:06.000
+caption caption caption
+
+00:06.001 --> 00:12.000
+You're not limited to one line either
+- you can span multiple lines
+- just make sure none of those lines are empty
+
+00:12.001 --> 00:16.000
+Usually you don't want timestamps that overlap
+
+00:15.000 --> 00:19.000
+But it's ok if they do.
+            </code></pre>
+          </section>
+
+          <section>
+            <img src="images/captions-unstyled.png"/>
+            <aside class="notes">
+              Notice how clicking the captions button just turns it on and off
+            </aside>
+          </section>
+
+          <section>
+            <h2>WebVTT Cue Components</h2>
+            <pre><code class="no-highlight" data-trim contenteditable>
+WEBVTT
+
+00:00.001 --> 00:03.000
+<u>Captions</u> <i>are</i> <b>cool</b>
+
+00:03.001 --> 00:06.000
+<c.blue-text>Especially when styled</c>
+
+00:06.001 --> 00:12.000
+<v John>Perhaps style each instance of a voice</v>
+
+00:12.001 --> 00:17.000
+That way you can make it easier to differentiate
+<v John>- between when one person's captions</v>
+<v Jane>- And another</v>
+
+
+
+            </pre></code>
+          </section>
+
+          <section>
+            <h2>Styling Cue Components</h2>
+            <pre><code data-trim contenteditable>
+video::cue(c.blue-text) { color: #b6dae6 }
+video::cue(v[voice="John"]) { color: yellow }
+video::cue(v[voice="Jane"]) { color: orange }
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Styled preview</h2>
+            <img src="images/captions-styled.png"/>
+          </section>
+
+          <section>
+            <h2>More than subtitles</h2>
+            <pre><code class="no-highlight" data-trim contenteditable>
+WEBVTT
+
+slide-1
+00:00.001 --> 00:04.000
+{
+  "title": "JSON!",
+  "description": "This is some awesome JSON. You could manipulate this with JS.",
+  "image": "images/json.gif",
+  "href": "http://json.org"
+}
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>kind="<span class="text pink">metadata</span>"</h2>
+            <pre><code class="language-html" data-trim contenteditable>
+<video controls>
+  <source src="video.mp4" type="video/mp4">
+  <track label="json-stuff" kind="metadata" src="json.vtt">
+</video>
+            </code></pre>
+          </section>
+
+          <section>
+            <pre><code class="language-javascript" data-trim contenteditable>
+var extraInfo = document.querySelector("#extra-info");
+var videoElement = document.querySelector("video");
+var textTracks = videoElement.textTracks;
+var textTrack = textTracks[0]; // since we only have one
+textTrack.oncuechange = function (){
+  var cue = this.activeCues[0];
+  if (cue) {
+    var content;
+    try {
+      content = JSON.parse(cue.text);
+    } catch (e) {
+      return false;
+    }
+    console.log(content);
+    if (content) {
+      extraInfo.innerHTML = '<a href="'+ content.href +'" alt="'+ content.title +'">' +
+                          ' <h3>'+ content.title +'</h3>' +
+                          ' <img src="'+ content.image +'"/><br/>'+
+                          ' <span>'+ content.description +'</span>' +
+                          '</a>';
+    } else {
+      extraInfo.innerHTML = '';
+    }
+  }
+}
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>WebVTT Browser Support</h2>
+            <ul>
+              <li>
+                <img width="50" height="auto" src="images/browser-chrome.png" style="vertical-align:middle;"/>
+                18+
+              </li>
+              <li>
+                <img width="50" height="auto" src="images/browser-safari.png" style="vertical-align:middle;"/>
+                6+
+              </li>
+              <li>
+                <img width="50" height="auto" src="images/browser-firefox.png" style="vertical-align:middle;"/>
+                31+ (beta)
+              </li>
+              <li>
+                <img width="50" height="auto" src="images/browser-ie.png" style="vertical-align:middle;"/>
+                10+
+              </li>
+              <li>
+                <img width="50" height="auto" src="images/browser-opera.png" style="vertical-align:middle;"/>
+                12.10
+              </li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <img src="images/html5-locked.png"/>
+          </section>
+
+          <section>
+            <div class="box half">
+              <img src="images/google.png"/><br/>
+              <img src="images/microsoft.png"/>
+            </div>
+            <div class="box half">
+              <img src="images/netflix.png"/><br/>
+              <img src="images/adobe.png"/>
+            </div>
+          </section>
+
+          <section>
+            <h2>Encrypted Media Extensions</h2>
+            <ul>
+              <li class="fragment"><strong>Not</strong> a DRM specification</li>
+              <li class="fragment">Outlines the structure for a DRM plug-in mechanism</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Proponents</h2>
+            <p>
+              To enable the playing of protected videos like feature-length Hollywood films,
+              <strong>developers are forced to rely on plugins or non-standard browser
+              extensions</strong>. As Adobe supports Open Web development more and more, we
+              need to find a way to provide this capability to developers.
+            </p>
+            <p><small>- Joe Steele, Sr. Computer Scientist at Adobe</small></p>
+          </section>
+
+          <section>
+            <img class="bordered" src="images/rabble.png"/>
+          </section>
+
+          <section>
+            <h2>Opponents</h2>
+            <p>
+              We recognize the need for the W3C to respond to the changing landscape
+              of the Web and to reconcile the interests of multiple parties. But ratifying
+              EME would be an abdication of responsibility; <strong>it would harm interoperability,
+              enshrine nonfree software in W3C standards and perpetuate oppressive business
+              models</strong>.
+            </p>
+            <p><small>Joint open letter to W3C</small></p>
+          </section>
+
+          <section>
+            <h2>Everyone Else</h2>
+            <p>
+              People want to watch video, including movies and TV shows. <strong>Browsers must
+              provide the ability to watch video or the browser becomes less and less
+              the tool users need.</strong> A number of content owners (in particular film and TV studios)
+              require technical mechanisms to reduce the ways in which people can use that content,
+              such as preventing people from making copies...<strong>Browsers must implement DRM in a way
+              that makes the <span class="text pink">content owners</span> comfortable.  Otherwise they won’t allow their content
+              to be viewed through that browser.</strong>
+            </p>
+            <p><small><a href="https://blog.mozilla.org/blog/2014/05/14/drm-and-the-challenge-of-serving-users/">DRM and the challenge of serving users</a> - Mitchell Baker (Mozilla)</small></p>
+          </section>
+
+          <section>
+            <h2>In the wild</h2>
+            <p>EME is already being used in production!</p>
+            <ul>
+              <li>ChromeCast</li>
+              <li>Netflix</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>EME Browser Support</h2>
+            <ul>
+              <li>
+                <img width="50" height="auto" src="images/browser-chrome.png" style="vertical-align:middle;"/>
+                23+
+              </li>
+              <li>
+                <img width="50" height="auto" src="images/browser-safari.png" style="vertical-align:middle;"/>
+                8 (Yosemite)
+              </li>
+              <li>
+                <img width="50" height="auto" src="images/browser-firefox.png" style="vertical-align:middle;"/>
+                Soon?
+              </li>
+              <li>
+                <img width="50" height="auto" src="images/browser-ie.png" style="vertical-align:middle;"/>
+                11+
+              </li>
+            </ul>
+            <aside class="notes">
+              Make sure to mention how big of a deal the FF thing is
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <img src="images/old-real-time.png"/>
+          </section>
+
+          <section>
+            <h2>WebRTC</h2>
+            <ul>
+              <li class="fragment">
+                <strong>Web</strong> <strong>R</strong>eal <strong>T</strong>ime <strong>C</strong>ommunication
+              </li>
+              <li class="fragment">Open-source project supported by the W3C, Google, Mozilla and Opera</li>
+            </ul>
+          </section>
+
+          <section>
+            <p>WebRTC is a new front in the long war for an <span class="text blue">open</span> and <span class="text blue">unencumbered</span> web.</p>
+            <p><small>- Brendan Eich, inventor of JavaScript (via <a href="http://html5rocks.com">HTML5rocks.com</a>)</small></p>
+          </section>
+
+          <section>
+            <h2>What's the <span class="text green">big deal</span>?</h2>
+            <ul>
+              <li class="fragment">Improved quality</li>
+              <li class="fragment">Faster</li>
+              <li class="fragment">Reduced latency</li>
+              <li class="fragment">No Flash required</li>
+              <li class="fragment">Native</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>3 APIs</h2>
+            <ul>
+              <li><strong>GetUserMedia</strong> - access camera and microphone</li>
+              <li><strong>PeerConnection</strong> - send/receive media</li>
+              <li><strong>DataChannels</strong> - send/receive non-media
+            </ul>
+          </section>
+
+          <section>
+            <h2>Cool all alone</h2>
+            <pre><code data-trim>navigator.getUserMedia({video: true, audio: false}, function(mediaStream) {
+  var video = document.getElementById('get-user-media');
+  video.src = window.URL.createObjectURL(mediaStream);
+
+  video.onloadedmetadata = function(e) {
+    console.log('Locked and loaded.');
+  };
+}, errCallback);</pre></code>
+          </section>
+
+          <section>
+            <video id="get-user-media" autoplay class="stretch"></video>
+
+            <p>
+              <a href="#" id="get-that-media" class="btn default">Get That Media!</a>
+              <a href="#" id="stop-getting-media" class="btn warning hidden">Stop the stream</a>
+            </p>
+
+            <script>
+              var errCallback = function(e) {
+                console.log('Did you just reject me?!', e)
+              };
+
+              var addStopBtn = function(stream) {
+                var btn = document.getElementById('stop-getting-media');
+                btn.classList.remove('hidden');
+
+                btn.addEventListener('click', function(e) {
+                  e.preventDefault();
+
+                  stream.stop();
+                  btn.classList.add('hidden');
+                });
+              };
+
+              // Hide the vendor prefix mess
+              navigator.getUserMedia  = navigator.getUserMedia ||
+                                        navigator.webkitGetUserMedia ||
+                                        navigator.mozGetUserMedia ||
+                                        navigator.msGetUserMedia;
+
+              var getMediaAndShow = function(e) {
+                e.preventDefault();
+
+                navigator.getUserMedia({video: true, audio: false}, function(mediaStream) {
+                  var video = document.getElementById('get-user-media');
+                  video.src = window.URL.createObjectURL(mediaStream);
+
+                  video.onloadedmetadata = function(e) {
+                    console.log('Locked and loaded.');
+                    getMediaBtn.classList.add('hidden');
+                    addStopBtn(mediaStream);
+                  };
+                }, errCallback);
+              }
+
+              var getMediaBtn = document.getElementById('get-that-media');
+              getMediaBtn.addEventListener('click', getMediaAndShow);
+            </script>
+          </section>
+
+          <section>
+            <img src="images/webrtc-flow.png"/>
+          </section>
+
+          <section>
+            <h2>There are tools...</h2>
+
+            <pre><code data-trim>var webrtc = new SimpleWebRTC({
+  // the id/element dom element that will hold "our" video
+  localVideoEl: 'localVideo',
+  // the id/element dom element that will hold remote videos
+  remoteVideosEl: 'remotesVideos',
+  // immediately ask for camera access
+  autoRequestMedia: true
+});
+
+// we have to wait until it's ready
+webrtc.on('readyToCall', function () {
+  // you can name it anything
+  webrtc.joinRoom('your awesome room name');
+});</pre></code>
+
+            <p><small><a href="http://simplewebrtc.com/">SimpleWebRTC.com</a> by &yet</small></p>
+          </section>
+
+          <section>
+            <h2>Pray to the demo gods...</h2>
+            <p>Go to:
+            <div class="box half">
+              <video id="rtc-local-video"></video>
+            </div>
+            <div class="box half">
+              <div id="rtc-remote-videos"></div>
+            </div>
+
+            <div class="clearfix"></div>
+            <p>
+              <a href="#" id="start-rtc" class="btn default">Start RTC</a>
+              <a href="#" id="end-rtc" class="btn warning hidden">End RTC</a>
+            </p>
+
+            <script>
+              var simpleRTC = {
+                webrtc: '',
+
+                start: function(e) {
+                  e.preventDefault();
+
+                  startRTCBtn.classList.add('hidden');
+
+                  var webrtc = new SimpleWebRTC({
+                    // the id/element dom element that will hold "our" video
+                    localVideoEl: 'rtc-local-video',
+                    // the id/element dom element that will hold remote videos
+                    remoteVideosEl: 'rtc-remote-videos',
+                    // immediately ask for camera access
+                    autoRequestMedia: true
+                  });
+
+                  simpleRTC.webrtc = webrtc;
+
+                  // we have to wait until it's ready
+                  webrtc.on('readyToCall', function () {
+                    // you can name it anything
+                    webrtc.joinRoom('developer-week-demo');
+                    endRTCBtn.classList.remove('hidden');
+                  });
+                },
+
+                end: function(e) {
+                  e.preventDefault();
+
+                  simpleRTC.webrtc.stopLocalVideo();
+                  simpleRTC.webrtc.stopScreenShare();
+                }
+              };
+
+              var startRTCBtn = document.getElementById('start-rtc');
+              startRTCBtn.addEventListener('click', simpleRTC.start);
+
+              var endRTCBtn = document.getElementById('end-rtc');
+              endRTCBtn.addEventListener('click', simpleRTC.end);
+            </script>
+          </section>
+
+          <section>
+            <h2>In the <span class="text green">wild</span></h2>
+            <ul>
+              <li>P2P CDN / File Sharing</li>
+              <ul>
+                <li><a href="https://www.sharefest.me/">Sharefest.me</a></li>
+                <li><a href="https://peer5.com/">Peer5</a></li>
+              </ul>
+              <li>Audio Calls</li>
+              <ul>
+                <li><a href="https://js.att.io/">ATT.js</a></li>
+                <li><a href="https://phono.com/">Phono</a></li>
+                <li><a href="http://www.frisb.com/">FrisB</a></li>
+              </ul>
+              <li>Video Conferencing</li>
+              <ul>
+                <li><a href="http://tokbox.com/">TokBox</a></li>
+                <li><a href="https://talky.io/" parent="_blank">Talky</a>
+              </ul>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Current Browser Support</h2>
+            <ul>
+              <li>
+                <img width="50" height="auto" src="images/browser-chrome.png" style="vertical-align:middle;"/>
+                23+
+              </li>
+              <li>
+                <img width="50" height="auto" src="images/browser-firefox.png" style="vertical-align:middle;"/>
+                22+
+              </li>
+              <li>
+                <img width="50" height="auto" src="images/browser-opera.png" style="vertical-align:middle;"/>
+                18+
+              </li>
+            </ul>
+            <p><small>All are still vendor prefixed</small></p>
+          </section>
+
+          <section>
+            <h2>WebRTC Complexity <span class="text blue">==</span> Support??</h2>
+            <img src="images/iswebrtcready.png" class="bordered" />
+            <p><small><a href="http://iswebrtcreadyyet.com/">IsWebRTCReadyYet.com/</a></small></p>
+          </section>
+
+        </section>
+
+        <section>
+          <section>
+            <img class="bordered" src="images/stream-all-the-things.png"/>
+          </section>
+
+          <section>
+            <h2>Existing <span class="text pink">streaming</span> solutions</h2>
+            <ul>
+              <li>RTMP</li>
+              <li>Microsoft Smooth Streaming</li>
+              <li>HTTP Live Streaming (HLS)</li>
+              <li>HTTP Dynamic Streaming (HDS)</li>
+            </ul>
+          </section>
+
+          <section>
+            <img class="bordered" src="images/stream-all-the-formats.png"/>
+          </section>
+
+          <section>
+            <h2>MPEG-<span class="text blue">Dash</span></h2>
+            <ul>
+              <li>
+                <strong>D</strong>ynamic <strong>A</strong>daptive <strong>S</strong>treaming over <strong>H</strong>TTP</li>
+              <li>Not a codec, a protocol, a system, or a format. Instead, it is a standard for interoperability--essentially end-to-end delivery--of video over HTTP.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>What makes <span class="text blue">Dash</span> special?</h2>
+            <ul>
+              <li class="fragment">Codec agnostic - can be implemented in either H.264 or WebM</li>
+              <li class="fragment">Does not specify a DRM method but supports all DRM techniques specified in ISO/IEC 23001-7: Common Encryption</li>
+              <li class="fragment">Supports trick modes for seeking, fast forwards and rewind</li>
+              <li class="fragment">Supports advertising insertion</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Dash - potential issues</h2>
+            <ul>
+              <li class="fragment">Codec Agnostic - fragmentation we currently see in HTML5 video could be indicative of what we will encounter with MPEG-DASH.</li>
+              <li class="fragment">Publishers still have to piece everything together</li>
+              <li class="fragment">What does Apple gain by supporting it?</li>
+            </ul>
+            <aside class="notes">
+              <ul>
+                <li>HLS is the de facto standard already</li>
+                <li>Why wouldn’t they push for HLS standardization instead?</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Dash.<span class="text green">js</span></h2>
+            <img class="bordered" height="500" width="auto" src="images/dash-client.png"/>
+            <p><a href="https://github.com/Dash-Industry-Forum/dash.js">GitHub.com/dash-industry-forum/dash.js</a></p>
+          </section>
+        </section>
+
+        <section>
+          <h2>Go forth and <span class="text pink">&lt;video&gt;</span></h2>
+          <p>And let us know if we can help</p>
+        </section>
+
+        <section>
+          <h1>Questions?</h1>
+          <h3><a href="mailto:mmcclure@brightcove.com">mmcclure@brightcove.com</a></h3>
+          <h3><a href="http://twitter.com/matt_mcclure" parent="_blank">@matt_mcclure</a></h3>
+          <img width="25%" height="auto" src="images/brightcove.png"/>
+        </section>
+
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: 'beige', // available themes are in /css/theme
+        transition: 'linear', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+
+    <script src="http://simplewebrtc.com/latest.js"></script>
+
+  </body>
+</html>
